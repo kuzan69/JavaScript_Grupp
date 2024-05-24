@@ -168,6 +168,23 @@ btnHold.addEventListener('click', () => {
   }
 });
 
+const changePlayerText = function() {
+  if(window.innerWidth <= 768) {
+    playerOne.textContent = 'P1';
+    playerTwo.textContent = 'P2';
+  } else {
+    playerOne.textContent = 'Player 1';
+    playerTwo.textContent = 'Player 2';
+  }
+}
+changePlayerText();
+
+window.addEventListener('resize', () => {
+  changePlayerText();
+});
+
+console.log(innerWidth);
+
 // När man startar ett nytt spel Salihs del
 newGameAll.forEach(game => {
   game.addEventListener('click', () => {
