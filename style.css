@@ -3,6 +3,7 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "inira-serif";
+  touch-action: manipulation;
 }
 
 body {
@@ -65,7 +66,7 @@ body {
 
 #gameSteps {
   font-size: 1.25rem;
-  max-width: 400px;
+  max-width: 375px;
   line-height: 2rem;
 }
 
@@ -317,8 +318,8 @@ p {
 
 @media screen and (max-width: 768px) {
   .gameExplanation {
-    height: 400px;
-    width: 300px;
+    height: 350px;
+    width: 290px;
   }
   #gameSteps {
     font-size: 1.1rem;
@@ -329,22 +330,46 @@ p {
   .newGameIcon {
     display: inline-block;
   }
+
+  .gameButtons {
+    row-gap: 25px;
+  }
+
+  .btnRoll,
+  .btnHold {
+    font-size: 1.35rem;
+    padding: 14px;
+  }
+
+  .btnRoll{
+    width: 200px;
+  }
+  
+  .btnHold{
+    width: 190px;
+  }
+
   #newGame {
     display: none;
   }
   #playerOne,
   #playerTwo {
-    font-size: 1.25rem;
+    font-size: 1.75rem;
   }
 
   #firstPoint,
   #secondPoint {
-    width: 75px;
-    height: 35px;
+    width: 85px;
+    height: 45px;
     background-color: #FFD08A;
     border: 2px solid #AE922C;
     display: grid;
     place-items: center;
     font-size: 1.5rem;
+  }
+
+  #diceImage, 
+  .diceImage {
+    width: 50px;
   }
 }
