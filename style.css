@@ -10,6 +10,52 @@ body {
   background-color: #EACAA6;
 }
 
+.victory {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background-color: #ae7a0071;
+  z-index: 1;
+  display: none;
+  place-items: center;
+  position: fixed;
+  opacity: 0;
+  transition: 1s;
+}
+
+.victorious {
+  background-color: whitesmoke;
+  padding: 40px 50px;
+  display: flex;
+  row-gap: 10px;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 5px;
+  box-shadow: 10px 10px black;
+  animation-name: gameExplanation;
+  animation-duration: 1.5s;
+  animation-timing-function: ease-out;
+}
+
+.crown {
+  font-size: 2rem;
+  color: goldenrod;
+}
+
+#playerWon {
+  font-size: 1.15rem;
+}
+
+#playAgain {
+  background-color: rgb(240, 188, 57);
+  padding: 7px 14px;
+  border-radius: 5px;
+  font-size: 14px;
+  color: #fff;
+  border: none;
+  appearance: none;
+}
+
 .hideBackground {
   position: absolute;
   width: 100vw;
@@ -19,6 +65,7 @@ body {
   display: grid;
   place-items: center;
   position: fixed;
+  transition: 1s;
 }
 
 .gameExplanation {
@@ -68,6 +115,7 @@ body {
   font-size: 1.25rem;
   max-width: 375px;
   line-height: 2rem;
+  padding: 0 5px;
 }
 
 .prevNext {
@@ -99,6 +147,7 @@ body {
   background-color: rgb(218, 188, 142);
 }
 
+#playAgain:active,
 #previous:active,
 #next:active,
 #nextDummy:active {
@@ -111,13 +160,29 @@ body {
   bottom: 0;
 }
 
-.newGameIcon {
-  font-size: 2.25rem;
-  color: #333;
+.newGameIcon,
+#infoIcon {
   padding: 10px;
   display: none;
-  background-color: rgb(255, 236, 215);
+  transform: translateY(-60px);
+  transition: 1s;
+}
+
+.newGameIcon {
+  font-size: 2.25rem;
   border-radius: 15px;
+  color: #fff;
+  background-color: rgba(218, 165, 32, .75);
+}
+
+#infoIcon {
+  padding: 7px 12px;
+  font-size: 1.5rem;
+  border-radius: 50%;
+  position: absolute;
+  right: 0;
+  color: #333;
+  background-color: rgba(255, 220, 130, 0.75);
 }
 
 #newGame {
@@ -130,6 +195,22 @@ body {
   place-items: center;
   margin: 5px 0 0 5px;
   position: absolute;
+  appearance: none;
+  border: none;
+  transition-duration: .15s;
+}
+
+#info {
+  width: 125px;
+  height: 40px;
+  background-color: rgba(255, 220, 130, 0.75);
+  font-size: 20px;
+  text-transform: uppercase;
+  display: grid;
+  place-items: center;
+  margin: 5px 0 0 5px;
+  position: absolute;
+  right: 5px;
   appearance: none;
   border: none;
   transition-duration: .15s;
@@ -324,10 +405,15 @@ p {
   #gameSteps {
     font-size: 1.1rem;
   }
+  .gameMenu {
+    transform: translateY(-60px);
+    transition: 1s;
+  }
   .gameInfo {
     margin: 20px 0;
   }
-  .newGameIcon {
+  .newGameIcon,
+  #infoIcon {
     display: inline-block;
   }
 
@@ -349,7 +435,8 @@ p {
     width: 190px;
   }
 
-  #newGame {
+  #newGame,
+  #info {
     display: none;
   }
   #playerOne,
