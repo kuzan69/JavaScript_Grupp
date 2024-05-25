@@ -1,10 +1,14 @@
 // Game state - Salih del 
+// let infoClicked;
 let clickCount = 0;
 let currentScore = 0;
 let activePlayer = 0;
 let totalScores = [0, 0];
 const winningScore = 56;
 
+const victory = document.querySelector('.victory');
+const playerWon = document.querySelector('#playerWon');
+const playAgain = document.querySelector('#playAgain');
 const hideBackground = document.querySelector('.hideBackground');
 const x = document.querySelector('#x');
 const gameSteps = document.querySelector('#gameSteps');
@@ -17,6 +21,10 @@ const next = document.querySelector('#next');
 const btnRoll = document.querySelector('.btnRoll');
 const btnHold = document.querySelector('.btnHold');
 const newGameAll = document.querySelectorAll('.newGame');
+const newGameIcon = document.querySelector('.newGameIcon'); // Denna
+const info = document.querySelectorAll('.info');
+const infoIcon = document.querySelector('#infoIcon');
+const gameMenu = document.querySelector('.gameMenu'); // Denna
 const diceImage = document.querySelector('#diceImage');
 const currentText = document.querySelector('#current');
 const firstPoint = document.querySelector('#firstPoint');
@@ -25,6 +33,7 @@ const secondPoint = document.querySelector('#secondPoint');
 const playerOne = document.querySelector('#playerOne');
 const playerTwo = document.querySelector('#playerTwo');
 
+const log = document.querySelector('.log');
 const playerText = document.querySelector('#playerText');
 const pointText = document.querySelector('#pointText');
 
@@ -40,18 +49,63 @@ imgTwo.classList.add('diceImage');
 imgTwo.style.display = 'block';
 imgTwo.style.margin = '10px auto';
 
+const test = function() {
+  const test = window.innerWidth <= 768 ? 'P1' : 'Player 1';
+  return test;
+};
+
 const steps = [
-  'The game starts when Player 1 starts rolling the dice',
-  'Let us say that you rolled a 4',
-  'Good. Now, do you want to keep on rolling.. Or do you want to keep your points?',
+  `The game starts when ${test()} starts rolling the dice`,
+  `Let us say that ${test()} rolled a 4`,
+  'Good. Now, do I want to keep on rolling.. Or do I want to keep my points?',
   'Damn, I rolled and got the CURSED Dice, NUMERO UNO!!',
   'Now.. Want to know the limit? It is now your turn to play!',
   'Good luck!'
 ];
 
+const infoClick = function() {
+  clickCount = 1;
+  hideBackground.style.display = 'grid';
+  hideBackground.style.opacity = '1';
+  let gameStyle = gameSteps.style;
+  gameStyle.fontSize = '1.25rem';
+  gameStyle.fontWeight = '100';
+  next.textContent = 'Next';
+  window.addEventListener('resize', () => {
+    if(window.innerWidth <= 768) {
+      gameMenu.style.transform = 'translateY(-60px)';
+      newGameIcon.style.transform = 'translateY(-60px)';
+      infoIcon.style.transform = 'translateY(-60px)';
+    }
+  });
+  gameMenu.style.transform = 'translateY(-60px)';
+  newGameIcon.style.transform = 'translateY(-60px)';
+  infoIcon.style.transform = 'translateY(-60px)';
+}
+
+info.forEach(item => {
+  item.addEventListener('click', () => {
+    infoClick();
+  });
+});
+
+const removeInfo = function() {
+  hideBackground.style.opacity = '0';
+  setTimeout(() => {
+    hideBackground.style.display = 'none';
+    next.textContent = 'Next';
+  }, 1000);
+  if(innerWidth <= 768) {
+    gameMenu.style.transform = 'translateY(0)';
+  }
+  newGameIcon.style.transform = 'translateY(0)';
+  infoIcon.style.transform = 'translateY(0)';
+  clickCount = 1;
+  return clickCount;
+}
+
 x.addEventListener('click', () => {
-  hideBackground.style.display = 'none';
-  clickCount = 0;
+  removeInfo();
 });
 
 nextDummy.addEventListener('click', () => {
@@ -62,7 +116,11 @@ nextDummy.addEventListener('click', () => {
 next.addEventListener('click', () => {
   gameSteps.textContent = steps[clickCount++];
   if(clickCount === steps.length + 1) {
-    hideBackground.style.display = 'none';
+    // hideBackground.style.opacity = '0';
+    // setTimeout(()=> {
+    //   hideBackground.style.display = 'none';
+    // }, 1000)
+    removeInfo();
   }
   if(clickCount === 2) {
     gameSteps.append(imgOne);
@@ -72,9 +130,10 @@ next.addEventListener('click', () => {
     gameSteps.append('Now it is Player 2s turn.')
   }
   if(clickCount === steps.length) {
-    gameStyle = gameSteps.style;
+    let gameStyle = gameSteps.style;
     gameStyle.fontSize = '2.25rem';
     gameStyle.fontWeight = 'bold';
+    next.textContent = 'Finish';
   }
   if(clickCount <= 1) {
     previous.addEventListener('click', () => {
@@ -149,6 +208,7 @@ btnRoll.addEventListener('click', () => {
 btnHold.addEventListener('click', () => {
   totalScores[activePlayer] += currentScore; 
   currentScore = 0;
+  diceImage.style.display = 'none';
 
   if (activePlayer === 0) {
     firstPoint.textContent = totalScores[0];
@@ -158,11 +218,32 @@ btnHold.addEventListener('click', () => {
 
   // Se vem som vinner - Hassan
   if (totalScores[activePlayer] >= winningScore) {
-    playerText.textContent = '';
-    pointText.textContent = '';
-    currentText.textContent = `Player ${activePlayer + 1} wins!`;
+    // playerText.textContent = '';
+    // pointText.textContent = '';
+    // currentText.textContent = `Player ${activePlayer + 1} wins!`;
+    playerWon.textContent = `Player ${activePlayer + 1} is THE UDC!`;
+    log.style.display = 'none';
+    victory.style.display = 'grid';
+    victory.style.opacity = '1';
+    const victoryMobile = function() {
+      if(window.innerWidth <= 768) {
+        gameMenu.style.transform = 'translateY(-60px)';
+        newGameIcon.style.transform = 'translateY(-60px)';
+        infoIcon.style.transform = 'translateY(-60px)';
+      } else {
+        gameMenu.style.transform = 'translateY(0)';
+        newGameIcon.style.transform = 'translateY(0)';
+      }
+    }
+    window.addEventListener('resize', () => {
+      victoryMobile();
+    });
+    victoryMobile();
     btnRoll.disabled = true;
     btnHold.disabled = true;
+    playAgain.addEventListener('click', () => {
+      location.reload();
+    });
   } else {
     switchPlayer();
   }
